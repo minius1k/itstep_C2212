@@ -1,32 +1,35 @@
-import math
+class Engine:
+    def __init__(self, fuel_type, power):
+        self.fuel_type = fuel_type
+        self.power = power
 
-class Shape:
-    def __init__(self, color):
-        self.color = color
-
-    def area(self):
-        pass
-
-class Circle(Shape):
-    def __init__(self, color, radius):
-        super().__init__(color)
-        self.radius = radius
-
-    def area(self):
-        return math.pi * self.radius ** 2
-
-class Rectangle(Shape):
-    def __init__(self, color, width, height):
-        super().__init__(color)
-        self.width = width
-        self.height = height
-
-    def area(self):
-        return self.width * self.height
+    def start_engine(self):
+        print(f"Двигун ({self.fuel_type}, {self.power} к.с.) запущено!")
 
 
-c = Circle("red", 5)
-r = Rectangle("blue", 4, 10)
+class Electronics:
+    def __init__(self, screen_size, has_gps):
+        self.screen_size = screen_size
+        self.has_gps = has_gps
 
-print(f"Circle area: {c.area()}")
-print(f"Rectangle area: {r.area()}")
+    def show_navigation(self):
+        if self.has_gps:
+            print(f"Навігація працює на екрані {self.screen_size} дюймів.")
+        else:
+            print("GPS відсутній.")
+
+
+class SmartCar(Engine, Electronics):
+    def __init__(self, brand, fuel_type, power, screen_size, has_gps):
+        Engine.__init__(self, fuel_type, power)
+        Electronics.__init__(self, screen_size, has_gps)
+        self.brand = brand
+
+    def drive(self):
+        print(f"Автомобіль {self.brand} готовий до їзди:")
+        self.start_engine()
+        self.show_navigation()
+
+
+car = SmartCar("BMW", "бензин", 250, 12, True)
+car.drive()
